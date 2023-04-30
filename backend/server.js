@@ -10,6 +10,7 @@ import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import products from './data/products.js'
 
 dotenv.config()
 
@@ -22,6 +23,15 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json())
+
+app.get('/api/products',(req,res)=>{
+  res.json(products)
+})
+
+app.get('/api/products/:id',(req,res)=>{
+  const product = products.filter((p)=>p.brand === req.params.id)
+  res.json(product)
+})
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
