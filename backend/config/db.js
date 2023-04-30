@@ -16,7 +16,7 @@
 // }
 
 // export default connectDB
-const pg = require('pg')
+import pg from 'pg'
 const connectDB = async () =>{
   try{
     const conn = new pg.Pool({
@@ -32,4 +32,4 @@ const connectDB = async () =>{
     process.exit(1)
   }
 }
-module.exports =  connectDB
+export default connectDB
