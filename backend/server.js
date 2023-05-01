@@ -1,33 +1,39 @@
-const path=require('path')
-const express = require('express')
-const cors = require('cors')
-const dotenv = require('dotenv')
-const colors =  require('colors')
-const morgan = require('morgan')
-const { notFound, errorHandler } =require('./middleware/errorMiddleware.js')
-const connectDB = require('./config/db.js')
+import path from 'path'
+import express from 'express'
+import dotenv from 'dotenv'
+import colors from 'colors'
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+import connectDB from './config/db.js'
 
-const productRoutes = require('./routes/productRoutes.js')
-const userRoutes = require('./routes/userRoutes.js')
-const orderRoutes = require('./routes/orderRoutes.js')
-const uploadRoutes = require('./routes/uploadRoutes.js')
-const products = require('./data/products.js')
+import cors from "cors"
+import morgan from "morgan"
+import cookieParser from "cookie-parser"
+import route from "./routes/users.js"
+import helmet from "helmet"
+import compression from "compression"
+import unknownEndpoint from "./middleware/unKnownEndpoint.js"
+import { handleError } from "./helpers/error.js"
+const PORT = process.env.PORT || 5000
 
 dotenv.config()
 
 connectDB()
 
-const app = express()
-app.use(cors())
+app.set("trust proxy", 1);
+app.use(cors({ credentials: true, origin: true }));
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(compression());
+app.use(helmet());
+app.use(cookieParser());
+app.use("/api", route);
+app.use(unknownEndpoint);
+app.use(handleError);
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'))
-}
+app.get("/", (req, res) =>
+  res.send("<h1 style='text-align: center'>E-COMMERCE API</h1>")
+);
 
-app.use(express.json())
-
-// app.use('/api/products', productRoutes)
-// app.use('/api/users', userRoutes)
 app.get('/api/products',(req,res)=>{
   res.json(products)
 })
@@ -36,36 +42,11 @@ app.get('/api/products/:id',(req,res)=>{
   const product = products.filter((p)=>p.brand === req.params.id)
   res.json(product)
 })
-app.use('/api/orders', orderRoutes)
-app.use('/api/upload', uploadRoutes)
 
-app.get('/api/config/paypal', (req, res) =>
-  res.send(process.env.PAYPAL_CLIENT_ID)
-)
-
-const __dirnametemp = path.resolve()
-app.use('/uploads', express.static(path.join(__dirnametemp, '/uploads')))
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirnametemp, '/frontend/build')))
-
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirnametemp, 'frontend', 'build', 'index.html'))
-  )
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running....')
-  })
-}
-
-app.use(notFound)
-app.use(errorHandler)
-
-const PORT = process.env.PORT || 5004
 
 app.listen(
   PORT,
   console.log(
-    `Server running in ${process.env.NODE_ENV||PORT} mode on port ${PORT}`.yellow.bold
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   )
 )

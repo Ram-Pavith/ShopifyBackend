@@ -16,15 +16,15 @@
 // }
 
 // export default connectDB
-const pg = require('pg')
-const connectDB = async () =>{
+import pg from 'pg'
+const pool = async () =>{
   try{
-    const conn = new pg.Pool({
+    pg.Pool({
       host:"localhost",
       user:"postgres",
       port:5432,
       password:"postgres",
-      database:"ShopifyDB"
+      database:"ShopifyTestDB"
   }) 
   }
   catch(error){
@@ -32,4 +32,4 @@ const connectDB = async () =>{
     process.exit(1)
   }
 }
-module.exports =  connectDB
+export default pool
