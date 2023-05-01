@@ -21,14 +21,14 @@ router
   .post(verifyToken, verifyAdmin, createProduct);
 
 router
-  .route("/:id")
+  .route("/:product_id")
   .get(getProduct)
   .get(getProductByName)
   .put(verifyToken, verifyAdmin, updateProduct)
   .delete(verifyToken, verifyAdmin, deleteProduct);
 
 router
-  .route("/:id/reviews")
+  .route("/:product_id/reviews")
   .get(getProductReviews)
   .post(verifyToken, createProductReview)
   .put(verifyToken, updateProductReview);

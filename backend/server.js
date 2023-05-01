@@ -33,15 +33,6 @@ app.get("/", (req, res) =>
   res.send("<h1 style='text-align: center'>E-COMMERCE API</h1>")
 );
 
-app.get('/api/products',(req,res)=>{
-  res.json(products)
-})
-
-app.get('/api/products/:id',(req,res)=>{
-  const product = products.filter((p)=>p.brand === req.params.id)
-  res.json(product)
-})
-
 
 app.listen(
   PORT,
