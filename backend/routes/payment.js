@@ -2,8 +2,8 @@ import { makePayment } from "../controllers/payment.controller.js"
 
 import router from "express"
 
-router.Router()
+const route = router.Router()
 
-router.route("/").post(makePayment);
+route.route("/").post(makePayment);
 
-export default router;
+export default route;

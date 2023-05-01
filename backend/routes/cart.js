@@ -8,22 +8,22 @@ import {
   decreaseItemQuantity,
 } from "../controllers/cart.controller.js"
 
-router.Router()
+const route = router.Router()
 
-router.use(verifyToken);
+route.use(verifyToken);
 // get cart items
-router.route("/").get(getCart);
+route.route("/").get(getCart);
 
 // add item to cart
-router.route("/add").post(addItem);
+route.route("/add").post(addItem);
 
 // delete item from cart
-router.route("/delete").delete(deleteItem);
+route.route("/delete").delete(deleteItem);
 
 // increment item quantity
-router.route("/increment").put(increaseItemQuantity);
+route.route("/increment").put(increaseItemQuantity);
 
 // decrement item quantity
-router.route("/decrement").put(decreaseItemQuantity);
+route.route("/decrement").put(decreaseItemQuantity);
 
-export default router
+export default route

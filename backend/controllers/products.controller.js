@@ -1,11 +1,29 @@
 import pool from "../config/db.js"
 import productService from "../services/product.service.js"
-
+import {client,cache} from '../config/redis.js'
 const getAllProducts = async (req, res) => {
-  const { page = 1 } = req.query;
-
-  const products = await productService.getAllProducts(page);
-  res.json(products);
+  const key = "products"
+  let responseProducts
+  try{
+    const products = cache(req,res,key,next)
+  }
+  catch{
+    const { page = 1 } = req.query;
+    const products = await productService.getAllProducts(page);
+    responseProducts = products
+    // Set data to Redis
+    client.setEx(key, 3600, products, products,(err,reply)=>{
+      if(err){
+        console.error(err)
+      }
+      else{
+        console.debug(reply)
+      }
+    });  
+  }
+  finally{
+    res.json(responseProducts);
+  }
 };
 
 const createProduct = async (req, res) => {

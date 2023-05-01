@@ -1,7 +1,7 @@
-const authService = require("../services/auth.service");
-const mail = require("../services/mail.service");
-const { ErrorHandler } = require("../helpers/error");
-
+import authService from "../services/auth.service.js"
+import {signupMail,resetPasswordMail,forgotPasswordMail} from "../services/mail.service.js"
+import { ErrorHandler } from "../helpers/error.js"
+const mail = {signupMail,resetPasswordMail,forgotPasswordMail}
 const createAccount = async (req, res) => {
   const { token, refreshToken, user } = await authService.signUp(req.body);
 
@@ -101,7 +101,7 @@ const resetPassword = async (req, res) => {
   });
 };
 
-module.exports = {
+export{
   createAccount,
   loginUser,
   googleLogin,

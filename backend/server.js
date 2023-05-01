@@ -8,15 +8,16 @@ import connectDB from './config/db.js'
 import cors from "cors"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
-import route from "./routes/users.js"
+import routes from "./routes/index.js"
 import helmet from "helmet"
 import compression from "compression"
 import unknownEndpoint from "./middleware/unKnownEndpoint.js"
 import { handleError } from "./helpers/error.js"
-const PORT = process.env.PORT || 5004
+const PORT = 5004
+
+const app = express()
 
 dotenv.config()
-const app = express()
 
 app.set("trust proxy", 1);
 app.use(cors({ credentials: true, origin: true }));
@@ -25,13 +26,22 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(helmet());
 app.use(cookieParser());
-app.use("/api", route);
+app.use("/api", routes);
 app.use(unknownEndpoint);
 app.use(handleError);
 
 app.get("/", (req, res) =>
   res.send("<h1 style='text-align: center'>E-COMMERCE API</h1>")
 );
+
+app.get('/api/products',(req,res)=>{
+  res.json(products)
+})
+
+app.get('/api/products/:id',(req,res)=>{
+  const product = products.filter((p)=>p.brand === req.params.id)
+  res.json(product)
+})
 
 
 app.listen(

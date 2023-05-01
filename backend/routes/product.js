@@ -13,24 +13,24 @@ import {
 import verifyAdmin from "../middleware/verifyAdmin.js"
 import verifyToken from "../middleware/verifyToken.js"
 
-router.Router()
+const route = router.Router()
 
-router
+route
   .route("/")
   .get(getAllProducts)
   .post(verifyToken, verifyAdmin, createProduct);
 
-router
+route
   .route("/:product_id")
   .get(getProduct)
   .get(getProductByName)
   .put(verifyToken, verifyAdmin, updateProduct)
   .delete(verifyToken, verifyAdmin, deleteProduct);
 
-router
+route
   .route("/:product_id/reviews")
   .get(getProductReviews)
   .post(verifyToken, createProductReview)
   .put(verifyToken, updateProductReview);
 
-export default router;
+export default route;

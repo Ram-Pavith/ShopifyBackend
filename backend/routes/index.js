@@ -6,13 +6,13 @@ import users from "./users.js"
 import auth from "./auth.js"
 import payment from "./payment.js"
 
-router.Router()
+const route = router.Router()
 
-router.use("/auth", auth);
-router.use("/users", users);
-router.use("/products", product);
-router.use("/orders", order);
-router.use("/cart", cart);
-router.use("/payment", payment);
+route.use("/auth", auth);
+route.use("/users", users);
+route.use("/products", product);
+route.use("/orders", order);
+route.use("/cart", cart);
+route.use("/payment", payment);
 
-export default router;
+export default route;

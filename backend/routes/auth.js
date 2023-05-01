@@ -9,21 +9,21 @@ import {
   refreshToken,
 } from "../controllers/auth.controller.js"
 
-router.Router()
+const route = router.Router()
 
-router.post("/signup", createAccount);
+route.post("/signup", createAccount);
 
-router.post("/login", loginUser);
+route.post("/login", loginUser);
 
-router.post("/google", googleLogin);
+route.post("/google", googleLogin);
 
-router.post("/forgot-password", forgotPassword);
+route.post("/forgot-password", forgotPassword);
 
 // token for reset password
-router.post("/check-token", verifyResetToken);
+route.post("/check-token", verifyResetToken);
 
-router.post("/reset-password", resetPassword);
+route.post("/reset-password", resetPassword);
 
-router.post("/refresh-token", refreshToken);
+route.post("/refresh-token", refreshToken);
 
-export default router
+export default route

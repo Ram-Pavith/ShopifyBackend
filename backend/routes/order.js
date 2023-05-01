@@ -6,12 +6,12 @@ import {
 } from "../controllers/orders.controller.js"
 import verifyToken from "../middleware/verifyToken.js"
 
-router.Router()
+const route = router.Router()
 
-router.route("/create").post(verifyToken, createOrder);
+route.route("/create").post(verifyToken, createOrder);
 
-router.route("/").get(verifyToken, getAllOrders);
+route.route("/").get(verifyToken, getAllOrders);
 
-router.route("/:id").get(verifyToken, getOrder);
+route.route("/:id").get(verifyToken, getOrder);
 
-export default router;
+export default route;

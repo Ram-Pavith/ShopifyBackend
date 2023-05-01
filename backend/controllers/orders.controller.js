@@ -1,5 +1,5 @@
-const orderService = require("../services/order.service");
-const cartService = require("../services/cart.service");
+import orderService from "../services/order.service.js"
+import cartService from "../services/cart.service.js"
 
 const createOrder = async (req, res) => {
   const { amount, itemTotal, paymentMethod, ref } = req.body;
@@ -37,7 +37,7 @@ const getOrder = async (req, res) => {
   res.json(order);
 };
 
-module.exports = {
+export {
   createOrder,
   getAllOrders,
   getOrder,

@@ -1,26 +1,28 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const {
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import {
   setTokenStatusDb,
   createResetTokenDb,
   deleteResetTokenDb,
   isValidTokenDb,
-} = require("../db/auth.db");
-const validateUser = require("../helpers/validateUser");
-const { ErrorHandler } = require("../helpers/error");
-const { changeUserPasswordDb } = require("../db/user.db");
-const {
+} from "../db/auth.db.js";
+import validateUser from "../helpers/validateUser.js";
+import { ErrorHandler } from "../helpers/error.js";
+import { changeUserPasswordDb } from "../db/user.db.js";
+import {
   getUserByEmailDb,
   getUserByUsernameDb,
   createUserDb,
   createUserGoogleDb,
-} = require("../db/user.db");
-const { createCartDb } = require("../db/cart.db");
-const mail = require("./mail.service");
-const { OAuth2Client } = require("google-auth-library");
-const crypto = require("crypto");
-const moment = require("moment");
-const { logger } = require("../utils/logger");
+} from "../db/user.db.js";
+import { createCartDb } from "../db/cart.db.js";
+import {signupMail,resetPasswordMail,forgotPasswordMail} from "./mail.service.js"
+import { OAuth2Client } from "google-auth-library";
+import crypto from "crypto";
+import moment from "moment";
+import { logger } from "../utils/logger.js";
+const mail = {signupMail,resetPasswordMail,forgotPasswordMail}
+
 let curDate = moment().format();
 
 class AuthService {
@@ -322,4 +324,4 @@ class AuthService {
   }
 }
 
-export default AuthService
+export default AuthService = new AuthService()
