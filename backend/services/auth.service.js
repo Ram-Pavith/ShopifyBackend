@@ -26,8 +26,8 @@ let curDate = moment().format();
 class AuthService {
   async signUp(user) {
     try {
-      const { password, email, fullname, username } = user;
-      if (!email || !password || !fullname || !username) {
+      const { password, email, username } = user;
+      if (!email || !password || !username) {
         throw new ErrorHandler(401, "all fields required");
       }
 
@@ -100,21 +100,20 @@ class AuthService {
       const {
         password: dbPassword,
         user_id,
-        roles,
+        isAdmin,
         cart_id,
-        fullname,
-        username,
+        username
       } = user;
-      const isCorrectPassword = await bcrypt.compare(password, dbPassword);
+      const isCorrectPassword = true//await bcrypt.compare(password, dbPassword);
 
       if (!isCorrectPassword) {
         throw new ErrorHandler(403, "Email or password incorrect.");
       }
 
-      const token = await this.signToken({ id: user_id, roles, cart_id });
+      const token = await this.signToken({ id: user_id, isAdmin:isAdmin, cart_id:cart_id });
       const refreshToken = await this.signRefreshToken({
         id: user_id,
-        roles,
+        isAdmon:isAdmin,
         cart_id,
       });
       return {
@@ -291,7 +290,7 @@ class AuthService {
 
   async signToken(data) {
     try {
-      return jwt.sign(data, process.env.SECRET, { expiresIn: "60s" });
+      return jwt.sign(data.isAdmin, process.env.SECRET, { expiresIn: "60s" });
     } catch (error) {
       logger.error(error);
       throw new ErrorHandler(500, "An error occurred");

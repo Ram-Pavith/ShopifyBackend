@@ -10,6 +10,6 @@ router.route("/create").post(verifyToken, createOrder);
 
 router.route("/").get(verifyToken, getAllOrders);
 
-router.route("/:id").get(verifyToken, getOrder);
+router.route("/:order_id").get(verifyToken, getOrder);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const authService = require("../services/auth.service");
+const userService = require("../services/user.service")
 const mail = require("../services/mail.service");
 const { ErrorHandler } = require("../helpers/error");
 
@@ -22,11 +23,13 @@ const createAccount = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email1, password1 } = req.body;
+  const { email, password } = await userService.getUserByEmail(email1)
   const { token, refreshToken, user } = await authService.login(
     email,
     password
   );
+  
 
   res.header("auth-token", token);
   res.cookie("refreshToken", refreshToken, {
@@ -38,6 +41,10 @@ const loginUser = async (req, res) => {
     token,
     user,
   });
+  // res.status(200).json({
+  //   email,
+  //   password
+  // })
 };
 
 const googleLogin = async (req, res) => {

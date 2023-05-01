@@ -1,11 +1,31 @@
-const pool = require("../config/db.js")
+const pool = require("../config/db")
 const productService = require("../services/product.service")
+const {client,cache} = require('../config/redis')
 
 const getAllProducts = async (req, res) => {
-  const { page = 1 } = req.query;
-
-  const products = await productService.getAllProducts(page);
-  res.json(products);
+  const key = "products"
+  let responseProducts
+  try{
+    const products = cache(req,res,key,next)
+  }
+  catch{
+    const { page = 1 } = req.query;
+    const products = await productService.getAllProducts(page);
+    responseProducts = products
+    // Set data to Redis
+    client.setex(key, 3600, products, products,(err,reply)=>{
+      if(err){
+        console.error(err)
+      }
+      else{
+        console.debug(reply)
+      }
+    });  
+  }
+  finally{
+    res.json(responseProducts);
+  }
+  
 };
 
 const createProduct = async (req, res) => {

@@ -1,10 +1,9 @@
-// import pino from "pino"
+const pino = require("pino")
 
 // Create a logging instance
-// const logger = pino({
-//   level: process.env.NODE_ENV === "production" ? "info" : "debug",
-//   prettyPrint: process.env.NODE_ENV !== "production",
-// });
-const logger=()=>3
+const logger = pino({
+  level: process.env.NODE_ENV === "production" ? "info" : "debug",
+});
+
 
 module.exports = {logger}
