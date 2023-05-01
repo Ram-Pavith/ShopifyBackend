@@ -7,23 +7,26 @@ const getAllUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  // const { username, password, email } = req.body;
-  // const hashedPassword = hashPassword(password);
+  const { username, password, email,city,state,country } = req.body;
+  const hashedPassword = hashPassword(password);
 
-  // const user = await userService.createUser({
-  //   username,
-  //   hashedPassword,
-  //   email,
-  // });
+  const user = await userService.createUser({
+    username,
+    password:hashedPassword,
+    email,
+    city,
+    state,
+    country
+  });
 
-  // res.status(201).json({
-  //   status: "success",
-  //   user,
-  // });
+  res.status(201).json({
+    status: "success",
+    user,
+  });
 };
 
 const getUserById = async (req, res) => {
-  const { user_id } = req.params;
+  const { user_id } = req.params.user_id;
   if (+user_id === req.user.id || req.user.is_admin) {
     try {
       const user = await userService.getUserById(id);
@@ -54,7 +57,7 @@ const updateUser = async (req, res) => {
         city,
         state,
         country,
-        id: req.params.id,
+        user_id: req.params.user_id,
       });
       return res.status(201).json(results);
     } catch (error) {
@@ -65,7 +68,7 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { user_id } = req.params;
+  const { user_id } = req.params.user_id;
   if (+user_id === req.user.user_id || req.user.is_admin) {
     try {
       const result = await userService.deleteUser(id);

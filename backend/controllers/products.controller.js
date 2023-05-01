@@ -27,36 +27,53 @@ const getAllProducts = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const newProduct = await productService.addProduct(req.body);
+  const { name, price, description, image_url, city, state, country } = req.body;
+  const newProduct = await productService.createProduct({
+    name,
+    price,
+    description,
+    image_url,
+    city,
+    state,
+    country,
+    shipping_price:10,
+    tax_price:price*0.18,
+    total:price*1.18 + 10
+  })
   res.status(200).json(newProduct);
 };
 
 const getProduct = async (req, res) => {
-  const product = await productService.getProductById(req.params);
+  const product = await productService.getProductById(req.params.product_id);
   res.status(200).json(product);
 };
 
 const getProductByName = async (req, res) => {
-  const product = await productService.getProductByName(req.params);
+  const product = await productService.getProductByName(req.params.name);
   res.status(200).json(product);
 };
 const updateProduct = async (req, res) => {
-  const { name, price, description } = req.body;
-  const { id } = req.params;
+  const { name, price, description, image_url, city, state, country } = req.body;
+  const { product_id } = req.params.product_id;
 
   const updatedProduct = await productService.updateProduct({
     name,
     price,
     description,
-    id,
+    image_url,
+    product_id,
+    city,
+    state,
+    country,
+    shipping_price:10,
+    tax_price:price*0.18,
+    total:price*1.18 + 10
   });
   res.status(200).json(updatedProduct);
 };
 
 const deleteProduct = async (req, res) => {
-  const { product_id } = req.params;
-  console.log(product_id)
-
+  const { product_id } = req.params.product_id;
   const deletedProduct = productService.removeProduct(product_id);
   res.status(200).json(deletedProduct);
 };
@@ -90,15 +107,15 @@ const getProductReviews = async (req, res) => {
 };
 
 const createProductReview = async (req, res) => {
-  const { product_id, content, rating } = req.body;
+  const { product_id, comment, rating } = req.body;
   const user_id = req.user.user_id;
 
   try {
     const result = await pool.query(
-      `INSERT INTO reviews(user_id, product_id, content, rating) 
+      `INSERT INTO reviews(user_id, product_id, comment, rating) 
        VALUES($1, $2, $3, $4) returning *
       `,
-      [user_id, product_id, content, rating]
+      [user_id, product_id, comment, rating]
     );
     res.json(result.rows);
   } catch (error) {
@@ -107,13 +124,13 @@ const createProductReview = async (req, res) => {
 };
 
 const updateProductReview = async (req, res) => {
-  const { content, rating, review_id } = req.body;
+  const { comment, rating, review_id } = req.body;
 
   try {
     const result = await pool.query(
-      `UPDATE reviews set content = $1, rating = $2 where review_id = $3 returning *
+      `UPDATE reviews set comment = $1, rating = $2 where review_id = $3 returning *
       `,
-      [content, rating, review_id]
+      [comment, rating, review_id]
     );
     res.json(result.rows);
   } catch (error) {

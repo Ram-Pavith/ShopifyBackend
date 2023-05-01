@@ -2,17 +2,20 @@ import orderService from "../services/order.service.js"
 import cartService from "../services/cart.service.js"
 
 const createOrder = async (req, res) => {
-  const { amount, itemTotal, paymentMethod, ref } = req.body;
-  const userId = req.user.user_id;
-  const cartId = req.user.cart_id;
+  const { amount, price, payment_method, ref } = req.body;
+  const user_id = req.user.user_id;
+  const cart_id = req.user.cart_id;
 
   const newOrder = await orderService.createOrder({
-    cartId,
+    cart_id,
     amount,
-    itemTotal,
-    userId,
-    paymentMethod,
+    price,
+    user_id,
+    payment_method,
     ref,
+    tax_price:price*0.18,
+    shipping_price:10,
+    total:price*1.18 + 10
   });
 
   // delete all items from cart_items table for the user after order has been processed
@@ -30,7 +33,7 @@ const getAllOrders = async (req, res) => {
 };
 
 const getOrder = async (req, res) => {
-  const { order_id } = req.params;
+  const { order_id } = req.params.order_id;
   const userId = req.user.user_id;
 
   const order = await orderService.getOrderById({ order_id, userId });

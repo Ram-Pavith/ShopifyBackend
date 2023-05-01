@@ -11,16 +11,16 @@ import { ErrorHandler } from "../helpers/error.js"
 import { logger } from "../utils/logger.js";
 
 class CartService {
-  createCart = async (userId) => {
+  createCart = async (user_id) => {
     try {
-      return await createCartDb(userId);
+      return await createCartDb(user_id);
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
     }
   };
-  getCart = async (userId) => {
+  getCart = async (user_id) => {
     try {
-      return await getCartDb(userId);
+      return await getCartDb(user_id);
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
     }
@@ -57,9 +57,9 @@ class CartService {
       throw new ErrorHandler(error.statusCode, error.message);
     }
   };
-  emptyCart = async (cartId) => {
+  emptyCart = async (cart_id) => {
     try {
-      return await emptyCartDb(cartId);
+      return await emptyCartDb(cart_id);
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
     }

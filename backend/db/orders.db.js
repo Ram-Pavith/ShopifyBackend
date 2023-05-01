@@ -3,21 +3,24 @@ import pool from "../config/db.js"
 const createOrderDb = async ({
   cart_id,
   amount,
-  itemTotal,
+  price,
   user_id,
   ref,
-  paymentMethod,
+  payment_method,
+  shipping_price,
+  tax_price,
+  total
 }) => {
   // create an order
   const { rows: order } = await pool.query(
-    "INSERT INTO orders(user_id, status, , total, ref, payment_method) VALUES($1, 'complete', $2, $3, $4, $5) returning *",
-    [user_id, amount, itemTotal, ref, paymentMethod]
+    "INSERT INTO orders(user_id, payment_status, price, ref, payment_method,shipping_price,tax_price,total) VALUES($1, 'success', $2, $3, $4, $5,$6,$7,$8,) returning *",
+    [user_id, amount, price, ref, payment_method,tax_price,shipping_price,total]
   );
 
   // copy cart items from the current cart_item table into order_item table
   await pool.query(
     `
-      INSERT INTO order_item(order_id,product_id, quantity) 
+      INSERT INTO order_item(order_id,product_id, quantity)
       SELECT $1, product_id, quantity from cart_item where cart_id = $2
       returning *
       `,

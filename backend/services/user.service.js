@@ -36,9 +36,9 @@ class UserService {
       throw new ErrorHandler(error.statusCode, error.message);
     }
   };
-  getUserById = async (id) => {
+  getUserById = async (user_id) => {
     try {
-      const user = await getUserByIdDb(id);
+      const user = await getUserByIdDb(user_id);
       user.password = undefined;
       user.google_id = undefined;
       user.cart_id = undefined;
@@ -62,10 +62,10 @@ class UserService {
     }
   };
   updateUser = async (user) => {
-    const { email, username, id } = user;
+    const { email, username, user_id } = user;
     const errors = {};
     try {
-      const getUser = await getUserByIdDb(id);
+      const getUser = await getUserByIdDb(user_id);
       const findUserByEmail = await getUserByEmailDb(email);
       const findUserByUsername = await getUserByUsernameDb(username);
       const emailChanged =
@@ -90,9 +90,9 @@ class UserService {
     }
   };
 
-  deleteUser = async (id) => {
+  deleteUser = async (user_id) => {
     try {
-      return await deleteUserDb(id);
+      return await deleteUserDb(user_id);
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
     }

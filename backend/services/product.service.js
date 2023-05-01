@@ -28,9 +28,9 @@ class ProductService {
     }
   };
 
-  getProductById = async (id) => {
+  getProductById = async (product_id) => {
     try {
-      const product = await getProductDb(id);
+      const product = await getProductDb(product_id);
       if (!product) {
         throw new ErrorHandler(404, "product not found");
       }
@@ -63,10 +63,10 @@ class ProductService {
     }
   };
 
-  removeProduct = async (id) => {
+  removeProduct = async (product_id) => {
     try {
-      // id = parseInt(id)
-      const product = await getProductDb({product_id:id});
+      //id = parseInt(product_id)
+      const product = await getProductDb(product_id);
       if (!product) {
         throw new ErrorHandler(404, "product not found");
       }

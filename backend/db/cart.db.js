@@ -1,15 +1,15 @@
 import pool from "../config/db.js"
 
-const createCartDb = async (userId) => {
+const createCartDb = async (user_id) => {
   const { rows: cart } = await pool.query(
     "INSERT INTO cart(user_id) values($1) returning cart.cart_id",
-    [userId]
+    [user_id]
   );
 
   return cart[0];
 };
 
-const getCartDb = async (userId) => {
+const getCartDb = async (user_id) => {
   // get cart items
   const cart = await pool.query(
     `SELECT products.*, cart_item.quantity, round((products.price * cart_item.quantity)::numeric, 2) as subtotal from users
@@ -18,7 +18,7 @@ const getCartDb = async (userId) => {
       join products on products.product_id = cart_item.product_id
       where users.user_id = $1
       `,
-    [userId]
+    [user_id]
   );
 
   return cart.rows;
@@ -83,8 +83,8 @@ const decreaseItemQuantityDb = async ({ cart_item_id, product_id }) => {
   return results.rows;
 };
 
-const emptyCartDb = async (cartId) => {
-  return await pool.query("delete from cart_item where cart_id = $1", [cartId]);
+const emptyCartDb = async (cart_id) => {
+  return await pool.query("delete from cart_item where cart_id = $1", [cart_id]);
 };
 
 export {

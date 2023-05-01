@@ -15,11 +15,11 @@ class OrderService {
     }
   };
 
-  getAllOrders = async (userId, page) => {
+  getAllOrders = async (user_id, page) => {
     const limit = 5;
     const offset = (page - 1) * limit;
     try {
-      return await getAllOrdersDb({ userId, limit, offset });
+      return await getAllOrdersDb({ user_id, limit, offset });
     } catch (error) {
       throw new ErrorHandler(error.statusCode, error.message);
     }
