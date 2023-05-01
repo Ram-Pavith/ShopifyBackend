@@ -54,9 +54,10 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const { id } = req.params;
+  const { product_id } = req.params;
+  console.log(product_id)
 
-  const deletedProduct = await productService.removeProduct(id);
+  const deletedProduct = productService.removeProduct(product_id);
   res.status(200).json(deletedProduct);
 };
 
@@ -90,7 +91,7 @@ const getProductReviews = async (req, res) => {
 
 const createProductReview = async (req, res) => {
   const { product_id, content, rating } = req.body;
-  const user_id = req.user.id;
+  const user_id = req.user.user_id;
 
   try {
     const result = await pool.query(
@@ -106,13 +107,13 @@ const createProductReview = async (req, res) => {
 };
 
 const updateProductReview = async (req, res) => {
-  const { content, rating, id } = req.body;
+  const { content, rating, review_id } = req.body;
 
   try {
     const result = await pool.query(
-      `UPDATE reviews set content = $1, rating = $2 where id = $3 returning *
+      `UPDATE reviews set content = $1, rating = $2 where review_id = $3 returning *
       `,
-      [content, rating, id]
+      [content, rating, review_id]
     );
     res.json(result.rows);
   } catch (error) {

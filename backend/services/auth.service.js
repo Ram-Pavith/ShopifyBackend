@@ -35,7 +35,7 @@ class AuthService {
 
       if (validateUser(email, password)) {
         const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const hashedPassword = true//await bcrypt.hash(password, salt);
 
         const userByEmail = await getUserByEmailDb(email);
         const userByUsername = await getUserByUsernameDb(username);
@@ -83,7 +83,7 @@ class AuthService {
     }
   }
 
-  async login(email, password) {
+  async login(email, password,is_admin) {
     try {
       if (!validateUser(email, password)) {
         throw new ErrorHandler(403, "Invalid login");
@@ -102,33 +102,32 @@ class AuthService {
       const {
         password: dbPassword,
         user_id,
-        roles,
+        is_admin,
         cart_id,
-        fullname,
         username,
       } = user;
-      const isCorrectPassword = await bcrypt.compare(password, dbPassword);
+      const isCorrectPassword = password //await bcrypt.compare(password, dbPassword);
 
       if (!isCorrectPassword) {
         throw new ErrorHandler(403, "Email or password incorrect.");
       }
 
-      const token = await this.signToken({ id: user_id, roles, cart_id });
+      const token = await this.signToken({ id: user_id, is_admin:is_admin, cart_id:cart_id });
       const refreshToken = await this.signRefreshToken({
         id: user_id,
-        roles,
-        cart_id,
+        is_admin:is_admin,
+        cart_id:cart_id,
       });
       return {
         token,
         refreshToken,
         user: {
           user_id,
-          fullname,
           username,
         },
       };
     } catch (error) {
+      logger.error(error)
       throw new ErrorHandler(error.statusCode, error.message);
     }
   }
@@ -293,7 +292,7 @@ class AuthService {
 
   async signToken(data) {
     try {
-      return jwt.sign(data, process.env.SECRET, { expiresIn: "60s" });
+      return jwt.sign(data, process.env.SECRET, { expiresIn: "1h" });
     } catch (error) {
       logger.error(error);
       throw new ErrorHandler(500, "An error occurred");
@@ -302,7 +301,7 @@ class AuthService {
 
   async signRefreshToken(data) {
     try {
-      return jwt.sign(data, process.env.REFRESH_SECRET, { expiresIn: "1h" });
+      return jwt.sign(data, process.env.REFRESH_SECRET, { expiresIn: "5h" });
     } catch (error) {
       logger.error(error);
       throw new ErrorHandler(500, error.message);
@@ -314,7 +313,7 @@ class AuthService {
       const payload = jwt.verify(token, process.env.REFRESH_SECRET);
       return {
         id: payload.id,
-        roles: payload.roles,
+        is_admin: payload.is_admin,
         cart_id: payload.cart_id,
       };
     } catch (error) {

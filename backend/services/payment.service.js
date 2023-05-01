@@ -1,6 +1,7 @@
 import Stripe from "stripe"
 import { ErrorHandler } from "../helpers/error.js"
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+import { logger } from "../utils/logger.js";
 
 class PaymentService {
   payment = async (amount, email) => {

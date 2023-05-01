@@ -3,7 +3,7 @@ import cartService from "../services/cart.service.js"
 
 const createOrder = async (req, res) => {
   const { amount, itemTotal, paymentMethod, ref } = req.body;
-  const userId = req.user.id;
+  const userId = req.user.user_id;
   const cartId = req.user.cart_id;
 
   const newOrder = await orderService.createOrder({
@@ -23,17 +23,17 @@ const createOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
   const { page = 1 } = req.query;
-  const userId = req.user.id;
+  const userId = req.user.user_id;
 
   const orders = await orderService.getAllOrders(userId, page);
   res.json(orders);
 };
 
 const getOrder = async (req, res) => {
-  const { id } = req.params;
-  const userId = req.user.id;
+  const { order_id } = req.params;
+  const userId = req.user.user_id;
 
-  const order = await orderService.getOrderById({ id, userId });
+  const order = await orderService.getOrderById({ order_id, userId });
   res.json(order);
 };
 

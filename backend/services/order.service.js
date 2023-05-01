@@ -4,6 +4,7 @@ import {
   getOrderDb,
 } from "../db/orders.db.js"
 import { ErrorHandler } from "../helpers/error.js"
+import { logger } from "../utils/logger.js";
 
 class OrderService {
   createOrder = async (data) => {

@@ -7,6 +7,7 @@ import {
   getProductByNameDb,
 } from "../db/product.db.js"
 import { ErrorHandler } from "../helpers/error.js"
+import { logger } from "../utils/logger.js";
 
 class ProductService {
   getAllProducts = async (page) => {
@@ -64,12 +65,14 @@ class ProductService {
 
   removeProduct = async (id) => {
     try {
-      const product = await getProductDb(id);
+      // id = parseInt(id)
+      const product = await getProductDb({product_id:id});
       if (!product) {
         throw new ErrorHandler(404, "product not found");
       }
       return await deleteProductDb(id);
     } catch (error) {
+      logger.error(error)
       throw new ErrorHandler(error.statusCode, error.message);
     }
   };

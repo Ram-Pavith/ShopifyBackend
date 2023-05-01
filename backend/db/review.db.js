@@ -31,11 +31,11 @@ const createReviewDb = async ({ productId, content, rating, userId }) => {
   return review[0];
 };
 
-const updateReviewDb = async ({ content, rating, id }) => {
+const updateReviewDb = async ({ content, rating, review_id }) => {
   const { rows: review } = await pool.query(
-    `UPDATE reviews set content = $1, rating = $2 where id = $3 returning *
+    `UPDATE reviews set content = $1, rating = $2 where review_id = $3 returning *
       `,
-    [content, rating, id]
+    [content, rating, review_id]
   );
   return review[0];
 };

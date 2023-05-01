@@ -13,6 +13,7 @@ import helmet from "helmet"
 import compression from "compression"
 import unknownEndpoint from "./middleware/unKnownEndpoint.js"
 import { handleError } from "./helpers/error.js"
+import loggerMiddleware from './middleware/loggerMiddleware.js'
 const PORT = 5004
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use("/api", routes);
 app.use(unknownEndpoint);
 app.use(handleError);
+app.use(loggerMiddleware)
 
 app.get("/", (req, res) =>
   res.send("<h1 style='text-align: center'>E-COMMERCE API</h1>")

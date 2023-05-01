@@ -4,14 +4,14 @@ const createOrderDb = async ({
   cart_id,
   amount,
   itemTotal,
-  userId,
+  user_id,
   ref,
   paymentMethod,
 }) => {
   // create an order
   const { rows: order } = await pool.query(
     "INSERT INTO orders(user_id, status, , total, ref, payment_method) VALUES($1, 'complete', $2, $3, $4, $5) returning *",
-    [userId, amount, itemTotal, ref, paymentMethod]
+    [user_id, amount, itemTotal, ref, paymentMethod]
   );
 
   // copy cart items from the current cart_item table into order_item table
@@ -39,7 +39,7 @@ const getAllOrdersDb = async ({ user_id, limit, offset }) => {
   return { items: orders.rows, total: rowCount };
 };
 
-const getOrderDb = async ({ order_id, userId }) => {
+const getOrderDb = async ({ order_id, user_id }) => {
   const { rows: order } = await pool.query(
     `SELECT products.*, order_item.quantity 
       from orders 
@@ -48,7 +48,7 @@ const getOrderDb = async ({ order_id, userId }) => {
       join products 
       on products.product_id = order_item.product_id 
       where orders.order_id = $1 AND orders.user_id = $2`,
-    [order_id, userId]
+    [order_id, user_id]
   );
   return order;
 };

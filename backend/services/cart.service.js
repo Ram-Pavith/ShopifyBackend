@@ -8,6 +8,7 @@ import {
   emptyCartDb,
 } from "../db/cart.db.js"
 import { ErrorHandler } from "../helpers/error.js"
+import { logger } from "../utils/logger.js";
 
 class CartService {
   createCart = async (userId) => {

@@ -1,31 +1,30 @@
 import userService from "../services/user.service.js"
 import { ErrorHandler } from "../helpers/error.js"
-import { hashPassword } from "../helpers/hashPassword.js"
+// import { hashPassword } from "../helpers/hashPassword.js"
 const getAllUsers = async (req, res) => {
   const results = await userService.getAllUsers();
   res.status(200).json(results);
 };
 
 const createUser = async (req, res) => {
-  const { username, password, email, fullname } = req.body;
-  const hashedPassword = hashPassword(password);
+  // const { username, password, email } = req.body;
+  // const hashedPassword = hashPassword(password);
 
-  const user = await userService.createUser({
-    username,
-    hashedPassword,
-    email,
-    fullname,
-  });
+  // const user = await userService.createUser({
+  //   username,
+  //   hashedPassword,
+  //   email,
+  // });
 
-  res.status(201).json({
-    status: "success",
-    user,
-  });
+  // res.status(201).json({
+  //   status: "success",
+  //   user,
+  // });
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.params;
-  if (+id === req.user.id || req.user.roles.includes("admin")) {
+  const { user_id } = req.params;
+  if (+user_id === req.user.id || req.user.is_admin) {
     try {
       const user = await userService.getUserById(id);
       return res.status(200).json(user);
@@ -37,21 +36,20 @@ const getUserById = async (req, res) => {
 };
 
 const getUserProfile = async (req, res) => {
-  const { id } = req.user;
+  const { user_id } = req.user;
 
-  const user = await userService.getUserById(id);
+  const user = await userService.getUserById(user_id);
 
   return res.status(200).json(user);
 };
 
 const updateUser = async (req, res) => {
-  const { username, email, fullname, address, city, state, country } = req.body;
-  if (+req.params.id === req.user.id || req.user.roles.includes("admin")) {
+  const { username, email, address, city, state, country } = req.body;
+  if (+req.params.user_id === req.user.user_id || req.user.is_admin) {
     try {
       const results = await userService.updateUser({
         username,
         email,
-        fullname,
         address,
         city,
         state,
@@ -67,8 +65,8 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { id } = req.params;
-  if (+id === req.user.id || req.user.roles.includes("admin")) {
+  const { user_id } = req.params;
+  if (+user_id === req.user.user_id || req.user.is_admin) {
     try {
       const result = await userService.deleteUser(id);
       res.status(200).json(result);

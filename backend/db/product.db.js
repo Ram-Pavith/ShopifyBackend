@@ -20,7 +20,7 @@ const createProductDb = async ({ name, price, description, image_url,brand,categ
   return product[0];
 };
 
-const getProductDb = async ({ product_id }) => {
+const getProductDb = async ( product_id ) => {
   const { rows: product } = await pool.query(
     `select products.*, trunc(avg(reviews.rating),1) as avg_rating, count(reviews.*) from products
         LEFT JOIN reviews
@@ -32,7 +32,7 @@ const getProductDb = async ({ product_id }) => {
   return product[0];
 };
 
-const getProductByNameDb = async ({ name }) => {
+const getProductByNameDb = async ( name ) => {
   const { rows: product } = await pool.query(
     `select products.*, trunc(avg(reviews.rating),1) as avg_rating, count(reviews.*) from products
         LEFT JOIN reviews
@@ -52,10 +52,11 @@ const updateProductDb = async ({ name, price, description, image_url, brand, cat
   return product[0];
 };
 
-const deleteProductDb = async ({ id }) => {
-  const { rows } = await pool.query(
+const deleteProductDb = async ( product_id ) => {
+  console.log("example"+product_id)
+  const {rows} = await pool.query(
     "DELETE FROM products where product_id = $1 returning *",
-    [id]
+    [product_id]
   );
   return rows[0];
 };

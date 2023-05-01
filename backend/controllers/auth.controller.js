@@ -1,6 +1,7 @@
 import authService from "../services/auth.service.js"
 import {signupMail,resetPasswordMail,forgotPasswordMail} from "../services/mail.service.js"
 import { ErrorHandler } from "../helpers/error.js"
+import userService from "../services/user.service.js";
 const mail = {signupMail,resetPasswordMail,forgotPasswordMail}
 const createAccount = async (req, res) => {
   const { token, refreshToken, user } = await authService.signUp(req.body);
@@ -22,10 +23,12 @@ const createAccount = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email1, password1 } = req.body;
+  const{email,password,is_admin} = await userService.getUserByEmail(email1)
   const { token, refreshToken, user } = await authService.login(
     email,
-    password
+    password,
+    is_admin
   );
 
   res.header("auth-token", token);
@@ -38,6 +41,11 @@ const loginUser = async (req, res) => {
     token,
     user,
   });
+  // res.status(200).json({
+  //   email,
+  //   password,
+  //   is_admin
+  // })
 };
 
 const googleLogin = async (req, res) => {

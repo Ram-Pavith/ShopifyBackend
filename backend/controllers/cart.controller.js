@@ -1,7 +1,7 @@
 import cartService from "../services/cart.service.js"
 
 const getCart = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user.user_id;
 
   // get cart items
   const cart = await cartService.getCart(userId);

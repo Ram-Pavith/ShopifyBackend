@@ -10,6 +10,7 @@ import {
   getUserByUsernameDb,
 } from "../db/user.db.js"
 import { ErrorHandler } from "../helpers/error.js"
+import { logger } from "../utils/logger.js";
 
 class UserService {
   createUser = async (user) => {
@@ -98,6 +99,7 @@ class UserService {
   };
 
   getAllUsers = async () => {
+    console.log("users")
     try {
       return await getAllUsersDb();
     } catch (error) {

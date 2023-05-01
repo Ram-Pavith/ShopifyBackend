@@ -12,6 +12,6 @@ route.route("/create").post(verifyToken, createOrder);
 
 route.route("/").get(verifyToken, getAllOrders);
 
-route.route("/:id").get(verifyToken, getOrder);
+route.route("/:order_id").get(verifyToken, getOrder);
 
 export default route;

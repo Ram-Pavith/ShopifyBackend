@@ -1,11 +1,11 @@
 import { ErrorHandler } from "../helpers/error.js"
 
 const verifyAdmin = (req, res, next)=>{
-  const { roles } = req.user;
-  if (roles && roles.includes("admin")) {
+  const { is_admin } = req.user;
+  if (is_admin) {
     req.user = {
       ...req.user,
-      roles,
+      is_admin,
     };
     return next();
   } else {
