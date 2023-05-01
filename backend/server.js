@@ -13,11 +13,10 @@ import helmet from "helmet"
 import compression from "compression"
 import unknownEndpoint from "./middleware/unKnownEndpoint.js"
 import { handleError } from "./helpers/error.js"
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5004
 
 dotenv.config()
-
-connectDB()
+const app = express()
 
 app.set("trust proxy", 1);
 app.use(cors({ credentials: true, origin: true }));
