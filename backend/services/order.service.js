@@ -37,4 +37,4 @@ class OrderService {
   };
 }
 
-export {OrderService}
+export default OrderService

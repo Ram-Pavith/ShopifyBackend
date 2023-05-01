@@ -65,4 +65,4 @@ class CartService {
   };
 }
 
-export {CartService}
+export default CartService

@@ -10,11 +10,11 @@ import router from "express"
 import verifyAdmin from "../middleware/verifyAdmin.js"
 import verifyToken from "../middleware/verifyToken.js"
 
-router.Router()
+const route = router.Router()
 
-router.use(verifyToken);
-router.route("/").get(verifyAdmin, getAllUsers).post(verifyAdmin, createUser);
-router.route("/profile").get(getUserProfile);
-router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
+route.use(verifyToken);
+route.route("/").get(verifyAdmin, getAllUsers).post(verifyAdmin, createUser);
+route.route("/profile").get(getUserProfile);
+route.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 
-module.exports = router;
+export default route;

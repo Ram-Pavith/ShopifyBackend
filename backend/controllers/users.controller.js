@@ -1,7 +1,6 @@
 import userService from "../services/user.service.js"
 import { ErrorHandler } from "../helpers/error.js"
 import { hashPassword } from "../helpers/hashPassword.js"
-
 const getAllUsers = async (req, res) => {
   const results = await userService.getAllUsers();
   res.status(200).json(results);

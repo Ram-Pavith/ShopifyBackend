@@ -1,6 +1,6 @@
 import { ErrorHandler } from "../helpers/error.js"
 
-export function verifyAdmin(req, res, next){
+const verifyAdmin = (req, res, next)=>{
   const { roles } = req.user;
   if (roles && roles.includes("admin")) {
     req.user = {
@@ -12,3 +12,4 @@ export function verifyAdmin(req, res, next){
     throw new ErrorHandler(401, "require admin role");
   }
 };
+export default verifyAdmin

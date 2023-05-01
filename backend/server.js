@@ -2,18 +2,17 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
-import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
 import cors from "cors"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
-import routes from "./routes"
+import route from "./routes/users.js"
 import helmet from "helmet"
 import compression from "compression"
-import unknownEndpoint from "./middleware/unKnownEndpoint"
-import { handleError } from "./helpers/error"
+import unknownEndpoint from "./middleware/unKnownEndpoint.js"
+import { handleError } from "./helpers/error.js"
 const PORT = process.env.PORT || 5000
 
 dotenv.config()
@@ -27,7 +26,7 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(helmet());
 app.use(cookieParser());
-app.use("/api", routes);
+app.use("/api", route);
 app.use(unknownEndpoint);
 app.use(handleError);
 

@@ -17,4 +17,4 @@ class PaymentService {
   };
 }
 
-export {PaymentService}
+export default PaymentService

@@ -322,4 +322,4 @@ class AuthService {
   }
 }
 
-export {AuthService}
+export default AuthService
