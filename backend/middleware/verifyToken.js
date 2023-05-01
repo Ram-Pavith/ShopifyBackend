@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken"
-import { ErrorHandler } from "../helpers/error.js"
+const jwt = require("jsonwebtoken");
+const { ErrorHandler } = require("../helpers/error");
 
 const verifyToken = (req, res, next) => {
   const token = req.header("auth-token");
@@ -16,4 +16,4 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-export default verifyToken;
+module.exports = verifyToken;

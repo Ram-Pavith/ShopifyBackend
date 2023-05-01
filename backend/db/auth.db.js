@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const isValidTokenDb = async ({ token, email, curDate }) => {
   const { rows } = await pool.query(
@@ -36,7 +36,7 @@ const deleteResetTokenDb = async (curDate) => {
   return true;
 };
 
-export {
+module.exports = {
   isValidTokenDb,
   createResetTokenDb,
   setTokenStatusDb,

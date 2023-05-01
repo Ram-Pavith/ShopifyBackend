@@ -1,9 +1,9 @@
-import {
+const {
   createOrderDb,
   getAllOrdersDb,
   getOrderDb,
-} from "../db/orders.db.js"
-import { ErrorHandler } from "../helpers/error.js"
+} = require("../db/orders.db");
+const { ErrorHandler } = require("../helpers/error");
 
 class OrderService {
   createOrder = async (data) => {
@@ -37,4 +37,4 @@ class OrderService {
   };
 }
 
-export default OrderService
+module.exports = new OrderService();

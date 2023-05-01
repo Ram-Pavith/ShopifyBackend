@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt"
-import pool from "../../config/db.js"
-import supertest from "supertest"
-const app = require("../../server.js");
+const bcrypt = require("bcrypt");
+const pool = require("../../config");
+const supertest = require("supertest");
+const app = require("../../app");
 const api = supertest(app);
-import jwt from "jsonwebtoken"
+const jwt = require("jsonwebtoken");
 const { usersInDb } = require("../../helpers/test_helper");
 
 let adminAuth = {};

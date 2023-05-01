@@ -7,4 +7,4 @@
 // });
 const logger=()=>3
 
-export {logger}
+module.exports = {logger}

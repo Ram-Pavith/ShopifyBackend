@@ -1,8 +1,8 @@
-import { ErrorHandler } from "../helpers/error.js"
+const { ErrorHandler } = require("../helpers/error");
 
 // eslint-disable-next-line no-unused-vars
 const unknownEndpoint = (request, response) => {
   throw new ErrorHandler(401, "unknown endpoint");
 };
 
-export default unknownEndpoint;
+module.exports = unknownEndpoint;

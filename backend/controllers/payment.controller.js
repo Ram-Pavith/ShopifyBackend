@@ -1,4 +1,4 @@
-import paymentService from "../services/payment.service.js"
+const paymentService = require("../services/payment.service")
 
 const makePayment = async (req, res) => {
   const { email, amount } = req.body;
@@ -7,6 +7,6 @@ const makePayment = async (req, res) => {
   res.json(result);
 };
 
-export {
+module.exports = {
   makePayment,
 };

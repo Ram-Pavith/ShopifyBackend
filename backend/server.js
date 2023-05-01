@@ -1,23 +1,23 @@
-import path from 'path'
-import express from 'express'
-import dotenv from 'dotenv'
-import colors from 'colors'
-import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-import connectDB from './config/db.js'
+const path = require('path')
+const express = require('express')
+const dotenv = require('dotenv')
+const colors = require('colors')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 
-import cors from "cors"
-import morgan from "morgan"
-import cookieParser from "cookie-parser"
-import route from "./routes/users.js"
-import helmet from "helmet"
-import compression from "compression"
-import unknownEndpoint from "./middleware/unKnownEndpoint.js"
-import { handleError } from "./helpers/error.js"
-const PORT = process.env.PORT || 5000
+const cors = require("cors")
+const morgan = require("morgan")
+const cookieParser = require("cookie-parser")
+const routes = require("./routes")
+const helmet = require("helmet")
+const compression = require("compression")
+const unknownEndpoint = require("./middleware/unKnownEndpoint")
+const { handleError } = require("./helpers/error")
+const PORT = 5004
+
+const app = express()
 
 dotenv.config()
-
-connectDB()
 
 app.set("trust proxy", 1);
 app.use(cors({ credentials: true, origin: true }));
@@ -26,7 +26,7 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(helmet());
 app.use(cookieParser());
-app.use("/api", route);
+app.use("/api", routes);
 app.use(unknownEndpoint);
 app.use(handleError);
 

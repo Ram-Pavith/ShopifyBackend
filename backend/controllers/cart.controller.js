@@ -1,4 +1,4 @@
-import cartService from "../services/cart.service.js"
+const cartService = require("../services/cart.service")
 
 const getCart = async (req, res) => {
   const userId = req.user.id;
@@ -43,7 +43,7 @@ const decreaseItemQuantity = async (req, res) => {
   res.json(cart);
 };
 
-export {
+module.exports = {
   getCart,
   addItem,
   increaseItemQuantity,

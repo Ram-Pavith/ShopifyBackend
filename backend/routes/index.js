@@ -1,12 +1,10 @@
-import router from "express"
-import cart from "./cart.js"
-import order from "./order.js"
-import product from "./product.js"
-import users from "./users.js"
-import auth from "./auth.js"
-import payment from "./payment.js"
-
-router.Router()
+const router = require("express").Router();
+const cart = require("./cart");
+const order = require("./order");
+const product = require("./product");
+const users = require("./users");
+const auth = require("./auth");
+const payment = require("./payment");
 
 router.use("/auth", auth);
 router.use("/users", users);
@@ -15,4 +13,4 @@ router.use("/orders", order);
 router.use("/cart", cart);
 router.use("/payment", payment);
 
-export default router;
+module.exports = router;

@@ -1,14 +1,12 @@
-import router from "express"
-import verifyToken from "../middleware/verifyToken.js"
-import {
+const router = require("express").Router();
+const verifyToken = require("../middleware/verifyToken");
+const {
   getCart,
   addItem,
   deleteItem,
   increaseItemQuantity,
   decreaseItemQuantity,
-} from "../controllers/cart.controller.js"
-
-router.Router()
+} = require("../controllers/cart.controller");
 
 router.use(verifyToken);
 // get cart items
@@ -26,4 +24,4 @@ router.route("/increment").put(increaseItemQuantity);
 // decrement item quantity
 router.route("/decrement").put(decreaseItemQuantity);
 
-export default router
+module.exports = router;

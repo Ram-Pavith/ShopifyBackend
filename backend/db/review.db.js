@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const getReviewsDb = async ({ productId, userId }) => {
   // check if current logged user review exist for the product
@@ -40,7 +40,7 @@ const updateReviewDb = async ({ content, rating, id }) => {
   return review[0];
 };
 
-export {
+module.exports = {
   createReviewDb,
   updateReviewDb,
   getReviewsDb,

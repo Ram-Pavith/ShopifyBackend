@@ -1,4 +1,4 @@
-import {
+const {
   createCartDb,
   getCartDb,
   addItemDb,
@@ -6,8 +6,8 @@ import {
   increaseItemQuantityDb,
   decreaseItemQuantityDb,
   emptyCartDb,
-} from "../db/cart.db.js"
-import { ErrorHandler } from "../helpers/error.js"
+} = require("../db/cart.db");
+const { ErrorHandler } = require("../helpers/error");
 
 class CartService {
   createCart = async (userId) => {
@@ -65,4 +65,4 @@ class CartService {
   };
 }
 
-export default CartService
+module.exports = new CartService();

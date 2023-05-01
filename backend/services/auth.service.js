@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {
   setTokenStatusDb,
@@ -322,4 +322,4 @@ class AuthService {
   }
 }
 
-export default AuthService
+module.exports = new AuthService();

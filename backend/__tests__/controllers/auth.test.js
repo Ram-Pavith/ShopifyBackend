@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt"
-import pool from "../../config/db.js"
-import supertest from "supertest"
-const app = require("../../server.js");
+const supertest = require("supertest");
+const app = require("../../app");
 const api = supertest(app);
+const pool = require("../../config");
+const bcrypt = require("bcrypt");
 
 beforeAll(async () => {
   await pool.query("DELETE FROM users");

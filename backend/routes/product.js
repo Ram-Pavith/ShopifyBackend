@@ -1,5 +1,5 @@
-import router from "express"
-import {
+const router = require("express").Router();
+const {
   getAllProducts,
   createProduct,
   getProduct,
@@ -9,11 +9,9 @@ import {
   getProductReviews,
   createProductReview,
   updateProductReview,
-} from "../controllers/products.controller.js"
-import verifyAdmin from "../middleware/verifyAdmin.js"
-import verifyToken from "../middleware/verifyToken.js"
-
-router.Router()
+} = require("../controllers/products.controller");
+const verifyAdmin = require("../middleware/verifyAdmin");
+const verifyToken = require("../middleware/verifyToken");
 
 router
   .route("/")
@@ -33,4 +31,4 @@ router
   .post(verifyToken, createProductReview)
   .put(verifyToken, updateProductReview);
 
-export default router;
+module.exports = router;

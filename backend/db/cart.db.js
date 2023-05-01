@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const createCartDb = async (userId) => {
   const { rows: cart } = await pool.query(
@@ -87,7 +87,7 @@ const emptyCartDb = async (cartId) => {
   return await pool.query("delete from cart_item where cart_id = $1", [cartId]);
 };
 
-export {
+module.exports = {
   createCartDb,
   getCartDb,
   addItemDb,

@@ -1,5 +1,5 @@
-import pool from "../config/db.js"
-import productService from "../services/product.service.js"
+const pool = require("../config/db.js")
+const productService = require("../services/product.service")
 
 const getAllProducts = async (req, res) => {
   const { page = 1 } = req.query;
@@ -102,7 +102,7 @@ const updateProductReview = async (req, res) => {
   }
 };
 
-export {
+module.exports = {
   getProduct,
   createProduct,
   updateProduct,

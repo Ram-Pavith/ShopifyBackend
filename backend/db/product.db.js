@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const getAllProductsDb = async ({ limit, offset }) => {
   const { rows } = await pool.query(
@@ -60,7 +60,7 @@ const deleteProductDb = async ({ id }) => {
   return rows[0];
 };
 
-export {
+module.exports = {
   getProductDb,
   getProductByNameDb,
   createProductDb,

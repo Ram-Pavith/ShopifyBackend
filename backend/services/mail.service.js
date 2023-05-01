@@ -1,9 +1,7 @@
-import dotenv from "dotenv"
-import nodemailer from "nodemailer"
-import { logger } from "../utils/logger.js"
-import { ErrorHandler } from "../helpers/error.js"
-
-dotenv.config()
+require("dotenv").config();
+const nodemailer = require("nodemailer");
+const { logger } = require("../utils/logger");
+const { ErrorHandler } = require("../helpers/error");
 
 const transporter = nodemailer.createTransport({
   port: process.env.SMTP_PORT,
@@ -86,7 +84,7 @@ const resetPasswordMail = async (email) => {
   }
 };
 
-export {
+module.exports = {
   signupMail,
   resetPasswordMail,
   forgotPasswordMail,

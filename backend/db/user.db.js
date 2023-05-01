@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const getAllUsersDb = async () => {
   const { rows: users } = await pool.query("select * from users");
@@ -80,7 +80,7 @@ const changeUserPasswordDb = async (hashedPassword, email) => {
   ]);
 };
 
-export {
+module.exports = {
   getAllUsersDb,
   getUserByIdDb,
   getUserByEmailDb,

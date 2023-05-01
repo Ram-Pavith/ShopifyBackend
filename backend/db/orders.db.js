@@ -1,4 +1,4 @@
-import pool from "../config/db.js"
+const pool = require("../config/db")
 
 const createOrderDb = async ({
   cart_id,
@@ -53,7 +53,7 @@ const getOrderDb = async ({ order_id, userId }) => {
   return order;
 };
 
-export {
+module.exports = {
   createOrderDb,
   getAllOrdersDb,
   getOrderDb,

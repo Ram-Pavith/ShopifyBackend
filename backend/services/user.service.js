@@ -1,4 +1,4 @@
-import {
+const {
   createUserDb,
   getUserByEmailDb,
   createUserGoogleDb,
@@ -8,8 +8,8 @@ import {
   deleteUserDb,
   getAllUsersDb,
   getUserByUsernameDb,
-} from "../db/user.db.js"
-import { ErrorHandler } from "../helpers/error.js"
+} = require("../db/user.db");
+const { ErrorHandler } = require("../helpers/error");
 
 class UserService {
   createUser = async (user) => {
@@ -106,4 +106,4 @@ class UserService {
   };
 }
 
-export default UserService = new UserService()
+module.exports = new UserService();

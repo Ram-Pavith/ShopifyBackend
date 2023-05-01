@@ -1,12 +1,10 @@
-import router from "express"
-import {
+const router = require("express").Router();
+const {
   getOrder,
   getAllOrders,
   createOrder,
-} from "../controllers/orders.controller.js"
-import verifyToken from "../middleware/verifyToken.js"
-
-router.Router()
+} = require("../controllers/orders.controller");
+const verifyToken = require("../middleware/verifyToken");
 
 router.route("/create").post(verifyToken, createOrder);
 
@@ -14,4 +12,4 @@ router.route("/").get(verifyToken, getAllOrders);
 
 router.route("/:id").get(verifyToken, getOrder);
 
-export default router;
+module.exports = router;

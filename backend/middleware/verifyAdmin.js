@@ -1,6 +1,6 @@
-import { ErrorHandler } from "../helpers/error.js"
+const { ErrorHandler } = require("../helpers/error");
 
-const verifyAdmin = (req, res, next)=>{
+module.exports = (req, res, next) => {
   const { roles } = req.user;
   if (roles && roles.includes("admin")) {
     req.user = {
@@ -12,4 +12,3 @@ const verifyAdmin = (req, res, next)=>{
     throw new ErrorHandler(401, "require admin role");
   }
 };
-export default verifyAdmin

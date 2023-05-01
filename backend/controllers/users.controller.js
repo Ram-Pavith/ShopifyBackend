@@ -1,6 +1,6 @@
-import userService from "../services/user.service.js"
-import { ErrorHandler } from "../helpers/error.js"
-import { hashPassword } from "../helpers/hashPassword.js"
+const userService =  require("../services/user.service")
+const { ErrorHandler } = require("../helpers/error")
+const { hashPassword } = require("../helpers/hashPassword")
 const getAllUsers = async (req, res) => {
   const results = await userService.getAllUsers();
   res.status(200).json(results);
@@ -79,7 +79,7 @@ const deleteUser = async (req, res) => {
   throw new ErrorHandler(401, "Unauthorized");
 };
 
-export {
+module.exports = {
   getAllUsers,
   createUser,
   getUserById,

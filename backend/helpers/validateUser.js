@@ -6,4 +6,4 @@ const validateUser = (email, password) => {
   return validEmail && validPassword;
 };
 
-export {validateUser}
+module.exports = validateUser;

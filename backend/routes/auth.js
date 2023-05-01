@@ -1,5 +1,5 @@
-import router from "express"
-import {
+const router = require("express").Router();
+const {
   createAccount,
   loginUser,
   googleLogin,
@@ -7,9 +7,7 @@ import {
   verifyResetToken,
   resetPassword,
   refreshToken,
-} from "../controllers/auth.controller.js"
-
-router.Router()
+} = require("../controllers/auth.controller");
 
 router.post("/signup", createAccount);
 
@@ -26,4 +24,4 @@ router.post("/reset-password", resetPassword);
 
 router.post("/refresh-token", refreshToken);
 
-export default router
+module.exports = router;

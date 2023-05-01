@@ -1,4 +1,4 @@
-import pool from "../config"
+const pool = require("../config");
 
 const usersInDb = async () => {
   const users = await pool.query("SELECT * FROM USERS");
@@ -10,4 +10,4 @@ const productsInDb = async () => {
   return products.rows;
 };
 
-export { usersInDb, productsInDb };
+module.exports = { usersInDb, productsInDb };

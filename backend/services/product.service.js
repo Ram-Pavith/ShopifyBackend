@@ -1,12 +1,12 @@
-import {
+const {
   getAllProductsDb,
   createProductDb,
   getProductDb,
   updateProductDb,
   deleteProductDb,
   getProductByNameDb,
-} from "../db/product.db.js"
-import { ErrorHandler } from "../helpers/error.js"
+} = require("../db/product.db");
+const { ErrorHandler } = require("../helpers/error");
 
 class ProductService {
   getAllProducts = async (page) => {
@@ -75,4 +75,4 @@ class ProductService {
   };
 }
 
-export default ProductService
+module.exports = new ProductService();
