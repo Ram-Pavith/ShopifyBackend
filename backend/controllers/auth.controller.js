@@ -4,6 +4,7 @@ import { ErrorHandler } from "../helpers/error.js"
 import userService from "../services/user.service.js";
 const mail = {signupMail,resetPasswordMail,forgotPasswordMail}
 const createAccount = async (req, res) => {
+  console.log(req.body)
   const { token, refreshToken, user } = await authService.signUp(req.body);
 
   if (process.env.NODE_ENV !== "test") {
@@ -23,29 +24,32 @@ const createAccount = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { email1, password1 } = req.body;
+  console.log("login ")
+  // console.log(req.body)
+  const { email1 } = req.body;
   const{email,password,is_admin} = await userService.getUserByEmail(email1)
-  const { token, refreshToken, user } = await authService.login(
-    email,
-    password,
-    is_admin
-  );
-
-  res.header("auth-token", token);
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "development" ? true : "none",
-    secure: process.env.NODE_ENV === "development" ? false : true,
-  });
-  res.status(200).json({
-    token,
-    user,
-  });
-  // res.status(200).json({
+  // const{email,password,is_admin} = await userService.getUserByEmail(email1)
+  // const { token, refreshToken, user } = await authService.login(
   //   email,
   //   password,
   //   is_admin
-  // })
+  // );
+
+  // res.header("auth-token", token);
+  // res.cookie("refreshToken", refreshToken, {
+  //   httpOnly: true,
+  //   sameSite: process.env.NODE_ENV === "development" ? true : "none",
+  //   secure: process.env.NODE_ENV === "development" ? false : true,
+  // });
+  // res.status(200).json({
+  //   token,
+  //   user,
+  // });
+  res.status(200).json({
+    email,
+    password,
+    is_admin
+  })
 };
 
 const googleLogin = async (req, res) => {
